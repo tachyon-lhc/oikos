@@ -61,3 +61,25 @@ input[type="checkbox"]:checked + label.tool-btn {
   top: 2px;
   left: 2px;
 }
+
+.context-menu {
+  position: fixed;
+  background: white;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  display: none;
+  z-index: 1000;
+}
+
+.context-menu.visible {
+  display: block;
+}
+
+.menu-item {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background: #f0f0f0;
+}
