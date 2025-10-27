@@ -1,3 +1,6 @@
+const contextMenu = document.getElementById("contextMenu");
+let currentContextRect = null; // El rectángulo sobre el que hiciste click derecho
+
 const tools = document.querySelectorAll('.sidebar input[type="checkbox"]');
 
 tools.forEach((tool) => {
@@ -24,6 +27,7 @@ let currentRect = null;
 let selectedReact = null;
 let offsetX, offsetY; // La posición inicial del mouse
 let originalX, originalY; // La posición original del rectángulo
+let selectedRect = null;
 
 // configurar modo de dibujo
 btnDraw.addEventListener("change", () => {
@@ -56,6 +60,7 @@ btnMove.addEventListener("change", () => {
   if (btnMove.checked) {
     mode = "move";
     btnMove.classList.add("active");
+    svg.style.cursor = "move";
   } else {
     mode = null;
     btnMove.classList.remove("active");
@@ -85,6 +90,19 @@ svg.addEventListener("mousedown", (e) => {
     currentRect.setAttribute("stroke-width", "2px");
     svg.appendChild(currentRect);
   }
+  if (mode === "move" && e.target.classList.contains("rectangle")) {
+    // Aquí guardas todo lo necesario
+    selectedRect = e.target;
+
+    const rect = svg.getBoundingClientRect();
+
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+    originalX = selectedRect.getAttribute("x");
+    originalY = selectedRect.getAttribute("y");
+  }
+  if (contextMenu.style.display === "block") return; // No hacer nada si el menú está abierto
 });
 
 // Dibujando (arrastrando el mouse)
@@ -112,13 +130,33 @@ svg.addEventListener("mousemove", (e) => {
       currentRect.setAttribute("height", height);
     }
   }
+  if (mode === "move" && selectedRect) {
+    const rect = svg.getBoundingClientRect();
+    const currentX = e.clientX - rect.left;
+    const currentY = e.clientY - rect.top;
+
+    //calcular cuanto se movio el mouse
+    const dx = currentX - offsetX;
+    const dy = currentY - offsetY;
+
+    //calcular nueva posicion del rectangulo
+    const newX = parseFloat(originalX) + dx;
+    const newY = parseFloat(originalY) + dy;
+
+    //actualizar posicion del rectangulo
+    selectedRect.setAttribute("x", newX);
+    selectedRect.setAttribute("y", newY);
+  }
 });
 
-// Terminar de dibujar
+// dejar la accion
 svg.addEventListener("mouseup", () => {
   if (isDrawing) {
     isDrawing = false;
     currentRect = null;
+  }
+  if (selectedRect) {
+    selectedRect = null; // Soltar el rectángulo
   }
 });
 
@@ -127,4 +165,35 @@ svg.addEventListener("click", (e) => {
   if (mode === "delete" && e.target.classList.contains("rectangle")) {
     e.target.remove();
   }
+  if (!contextMenu.contains(e.target)) {
+    contextMenu.style.display = "none";
+  }
+});
+
+svg.addEventListener("contextmenu", (event) => {
+  event.preventDefault(); // Prevents the default context menu from appearing
+  console.log("Right-clicked!");
+  mode = null; // Salir de cualquier modo activo
+  btnDraw.checked = false;
+  btnDraw.classList.remove("active");
+  btnDelete.checked = false;
+  btnDelete.classList.remove("active");
+  btnMove.checked = false;
+  btnMove.classList.remove("active");
+  contextMenu.style.display = "block";
+  contextMenu.style.left = `${event.pageX}px`;
+  contextMenu.style.top = `${event.pageY}px`;
+});
+
+const menuItems = document.querySelectorAll(".menu-item");
+menuItems.forEach((item) => {
+  item.addEventListener("click", (e) => {
+    const tipo = e.target.getAttribute("data-tipo");
+    console.log("Seleccionaste:", tipo);
+
+    // TODO: Aquí guardarás el tipo en el rectángulo
+
+    // Ocultar el menú
+    contextMenu.style.display = "none";
+  });
 });
