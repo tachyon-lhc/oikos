@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fff;
+}
+
+.container {
+  display: flex;
+  height: 80vh; /* Altura fija del área de trabajo */
+  width: 80vw;
+  border: 2px solid #ccc;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px; /* Separación superior */
+  gap: 10px;
+  background-color: #eee;
+  width: 120px;
+  box-sizing: border-box;
+  border: 1px solid #333;
+}
+
+.canvas {
+  flex: 1;
+  background: white;
+  border-left: 2px solid #ccc;
+  height: 100%; /* Iguala la altura al contenedor */
+  cursor: crosshair;
+}
+
+input {
+  display: none;
+}
+
+.tool-btn {
+  padding: 5px;
+  margin: 7px 8px 5px 5px;
+  user-select: none;
+  background-color: #ddd;
+  color: #333;
+  border: none;
+  box-shadow: 2px 2px 1px #333;
+  font-size: 20px;
+}
+
+.tool-btn:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked + label.tool-btn {
+  box-shadow: none;
+  background-color: #222;
+  color: white;
+  position: relative;
+  top: 2px;
+  left: 2px;
+}
