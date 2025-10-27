@@ -23,7 +23,13 @@ const state = {
   offsetY: 0,
   originalX: 0,
   originalY: 0,
+  originalWidth: 0, // AGREGAR
+  originalHeight: 0, // AGREGAR
 
   // Para menú contextual
   currentContextRect: null,
+
+  // Para redimensionar
+  isResizing: false,
+  resizeCorner: null,
 };
