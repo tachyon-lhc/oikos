@@ -1,5 +1,32 @@
 // Funciones para dibujar, mover y borrar en el canvas
 
+function detectCorner(mouseX, mouseY, rect, threshold = 30) {
+  const x = parseFloat(rect.getAttribute("x"));
+  const y = parseFloat(rect.getAttribute("y"));
+  const width = parseFloat(rect.getAttribute("width"));
+  const height = parseFloat(rect.getAttribute("height"));
+
+  const corners = {
+    topLeft: { x: x, y: y },
+    topRight: { x: x + width, y: y },
+    bottomLeft: { x: x, y: y + height },
+    bottomRight: { x: x + width, y: y + height },
+  };
+
+  // Verificar cada esquina
+  for (const [cornerName, corner] of Object.entries(corners)) {
+    const distance = Math.sqrt(
+      Math.pow(mouseX - corner.x, 2) + Math.pow(mouseY - corner.y, 2),
+    );
+
+    if (distance <= threshold) {
+      return cornerName; // Retorna 'topLeft', 'topRight', etc.
+    }
+  }
+
+  return null; // No está cerca de ninguna esquina
+}
+
 function initCanvas() {
   // Empezar a dibujar
   state.svg.addEventListener("mousedown", (e) => {
@@ -60,16 +87,67 @@ function initCanvas() {
       state.selectedGroup = e.target.parentElement;
 
       const rect = state.svg.getBoundingClientRect();
-      state.offsetX = e.clientX - rect.left;
-      state.offsetY = e.clientY - rect.top;
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
 
-      state.originalX = state.selectedRect.getAttribute("x");
-      state.originalY = state.selectedRect.getAttribute("y");
+      // Detectar si está cerca de una esquina
+      const corner = detectCorner(mouseX, mouseY, state.selectedRect);
+
+      if (corner) {
+        // Modo redimensionar
+        state.isResizing = true;
+        state.resizeCorner = corner;
+        state.originalX = parseFloat(state.selectedRect.getAttribute("x"));
+        state.originalY = parseFloat(state.selectedRect.getAttribute("y"));
+        state.originalWidth = parseFloat(
+          state.selectedRect.getAttribute("width"),
+        );
+        state.originalHeight = parseFloat(
+          state.selectedRect.getAttribute("height"),
+        );
+        state.offsetX = mouseX;
+        state.offsetY = mouseY;
+      } else {
+        // Modo mover (como antes)
+        state.offsetX = mouseX;
+        state.offsetY = mouseY;
+        state.originalX = state.selectedRect.getAttribute("x");
+        state.originalY = state.selectedRect.getAttribute("y");
+      }
     }
   });
 
   // Dibujando/Moviendo (arrastrando el mouse)
   state.svg.addEventListener("mousemove", (e) => {
+    // Cambiar cursor si estamos en modo move y sobre un rectángulo
+    if (
+      state.mode === "move" &&
+      e.target.classList.contains("rectangle") &&
+      !state.isResizing &&
+      !state.selectedRect
+    ) {
+      const rect = state.svg.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      const mouseY = e.clientY - rect.top;
+
+      const corner = detectCorner(mouseX, mouseY, e.target);
+
+      if (corner) {
+        // Cambiar cursor según la esquina
+        switch (corner) {
+          case "topLeft":
+          case "bottomRight":
+            state.svg.style.cursor = "nwse-resize";
+            break;
+          case "topRight":
+          case "bottomLeft":
+            state.svg.style.cursor = "nesw-resize";
+            break;
+        }
+      } else {
+        state.svg.style.cursor = "move";
+      }
+    }
     // Dibujar
     if (state.isDrawing && state.mode === "draw" && state.currentRect) {
       const rect = state.svg.getBoundingClientRect();
@@ -131,6 +209,61 @@ function initCanvas() {
         text.setAttribute("y", newY + height / 2);
       }
     }
+
+    // Redimensionar - AGREGAR ESTE BLOQUE COMPLETO
+
+    if (state.mode === "move" && state.isResizing && state.selectedRect) {
+      const rect = state.svg.getBoundingClientRect();
+      const currentX = e.clientX - rect.left;
+      const currentY = e.clientY - rect.top;
+
+      const dx = currentX - state.offsetX;
+      const dy = currentY - state.offsetY;
+
+      let newX = state.originalX;
+      let newY = state.originalY;
+      let newWidth = state.originalWidth;
+      let newHeight = state.originalHeight;
+
+      // Calcular nuevas dimensiones según la esquina
+      switch (state.resizeCorner) {
+        case "topLeft":
+          newX = state.originalX + dx;
+          newY = state.originalY + dy;
+          newWidth = state.originalWidth - dx;
+          newHeight = state.originalHeight - dy;
+          break;
+        case "topRight":
+          newY = state.originalY + dy;
+          newWidth = state.originalWidth + dx;
+          newHeight = state.originalHeight - dy;
+          break;
+        case "bottomLeft":
+          newX = state.originalX + dx;
+          newWidth = state.originalWidth - dx;
+          newHeight = state.originalHeight + dy;
+          break;
+        case "bottomRight":
+          newWidth = state.originalWidth + dx;
+          newHeight = state.originalHeight + dy;
+          break;
+      }
+
+      // Evitar dimensiones negativas
+      if (newWidth > 10 && newHeight > 10) {
+        state.selectedRect.setAttribute("x", newX);
+        state.selectedRect.setAttribute("y", newY);
+        state.selectedRect.setAttribute("width", newWidth);
+        state.selectedRect.setAttribute("height", newHeight);
+
+        // Actualizar posición del texto
+        const text = state.selectedGroup.querySelector(".room-label");
+        if (text) {
+          text.setAttribute("x", newX + newWidth / 2);
+          text.setAttribute("y", newY + newHeight / 2);
+        }
+      }
+    }
   });
 
   // Dejar la acción
@@ -145,6 +278,8 @@ function initCanvas() {
     if (state.selectedRect) {
       state.selectedRect = null;
       state.selectedGroup = null;
+      state.isResizing = false; // AGREGAR ESTA LÍNEA
+      state.resizeCorner = null; // AGREGAR ESTA LÍNEA
     }
   });
 
