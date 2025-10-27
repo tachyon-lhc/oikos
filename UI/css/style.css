@@ -38,7 +38,8 @@ input {
   display: none;
 }
 
-.tool-btn {
+.tool-btn,
+.tool-btn-exp {
   padding: 5px;
   margin: 7px 8px 5px 5px;
   user-select: none;
@@ -52,6 +53,14 @@ input {
 .tool-btn:hover {
   background-color: #ccc;
   cursor: pointer;
+}
+
+button:active {
+  background-color: #000;
+  color: white;
+  position: relative;
+  top: 2px;
+  left: 2px;
 }
 
 input[type="checkbox"]:checked + label.tool-btn {
