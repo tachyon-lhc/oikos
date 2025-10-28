@@ -27,10 +27,23 @@ function detectCorner(mouseX, mouseY, rect, threshold = 30) {
   return null; // No está cerca de ninguna esquina
 }
 
+function showOnlyFloor(floorNumber) {
+  document.querySelectorAll(".rectangle-group").forEach((group) => {
+    const groupFloor = parseInt(group.getAttribute("data-floor"));
+    if (groupFloor === floorNumber) {
+      group.style.display = "block";
+    } else {
+      group.style.display = "none";
+    }
+  });
+}
+
 function initCanvas() {
   // Empezar a dibujar
+
   state.svg.addEventListener("mousedown", (e) => {
     if (state.contextMenu.style.display === "block") return;
+    showOnlyFloor(state.currentFloor);
 
     if (state.mode === "draw") {
       state.isDrawing = true;
@@ -43,7 +56,11 @@ function initCanvas() {
         "http://www.w3.org/2000/svg",
         "g",
       );
+
       state.currentGroup.classList.add("rectangle-group");
+
+      state.currentGroup.setAttribute("data-floor", state.currentFloor);
+      console.log("Creando rectángulo en piso:", state.currentFloor);
 
       // Crear el rectángulo
       state.currentRect = document.createElementNS(
@@ -148,6 +165,7 @@ function initCanvas() {
         state.svg.style.cursor = "move";
       }
     }
+
     // Dibujar
     if (state.isDrawing && state.mode === "draw" && state.currentRect) {
       const rect = state.svg.getBoundingClientRect();
