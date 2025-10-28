@@ -2,6 +2,14 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   // Inicializar referencias a elementos del DOM
+  state.canvases = {
+    1: document.getElementById("canvas-floor-1"),
+    2: document.getElementById("canvas-floor-2"),
+    3: document.getElementById("canvas-floor-3"),
+  };
+  state.svg = state.canvases[1]; // Canvas activo por defecto
+  state.currentFloor = 1;
+  // Inicializar referencias a elementos del DOM
   state.svg = document.getElementById("canvas");
   state.contextMenu = document.getElementById("contextMenu");
   state.btnDraw = document.getElementById("btn-est-rect");
@@ -14,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCanvas();
   initContextMenu();
   initExport();
+  initFloorSelector(); // NUEVA FUNCIÓN
 
   console.log("Aplicación inicializada correctamente");
 });

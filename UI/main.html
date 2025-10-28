@@ -8,7 +8,7 @@
   </head>
   <body>
     <div class="container">
-      <div class="sidebar">
+      <div class="sidebar sidebar-left">
         <input type="checkbox" id="btn-est-rect" />
         <label for="btn-est-rect" class="tool-btn" id="rectTool"
           >Rectángulo</label
@@ -19,9 +19,8 @@
         <label for="btn-est-clean" class="tool-btn" id="deleteTool"
           >Borrar</label
         >
-        <hr style="width: 80%; border: 1px solid #444" />
         <button type="click" class="tool-btn-exp" id="btn-est-exp">
-          Exportar JSON
+          Calcular valor
         </button>
       </div>
       <svg class="canvas" id="canvas">
@@ -46,6 +45,46 @@
         <!-- Usa el patrón para rellenar un rectángulo que cubra todo el SVG -->
         <rect width="100%" height="100%" fill="url(#cuadricula)" />
       </svg>
+      <div class="sidebar sidebar-right">
+        <div class="form-section">
+          <h3>Información adicional</h3>
+
+          <label>Área:</label>
+          <input type="number" id="area-metros" placeholder="ej: 120" min="1" />
+
+          <label>
+            <input type="checkbox" id="parking " />
+            Estacionamiento
+          </label>
+
+          <label>
+            <input type="checkbox" id="mainroad" />
+            Calle principal
+          </label>
+
+          <label>
+            <input type="checkbox" id="hotwaterheating" />
+            Calentador de agua
+          </label>
+
+          <label>
+            <input type="checkbox" id="airconditioning" />
+            Aire acondicionado
+          </label>
+
+          <label>
+            <input type="checkbox" id="prefarea" />
+            Área preferencial
+          </label>
+
+          <label>Estado del mobiliario:</label>
+          <select id="furnishingstatus">
+            <option value="unfurnished">Sin amueblar</option>
+            <option value="semi-furnished">Semi-amueblado</option>
+            <option value="furnished">Amueblado</option>
+          </select>
+        </div>
+      </div>
     </div>
     <div id="contextMenu" class="context-menu">
       <div class="menu-item" data-tipo="dormitorio">Dormitorio</div>
@@ -54,9 +93,7 @@
       <div class="menu-item" data-tipo="sala">Sala/Living</div>
       <div class="menu-item" data-tipo="comedor">Comedor</div>
       <div class="menu-item" data-tipo="sotano">Sotano</div>
-      <div class="menu-item" data-tipo="dorm-invitados">
-        Dormitorio (Invitados)
-      </div>
+      <div class="menu-item" data-tipo="hab-invitados">Hab-Invitados</div>
     </div>
     <script src="js/state.js"></script>
     <script src="js/tools.js"></script>

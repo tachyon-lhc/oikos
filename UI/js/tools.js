@@ -1,6 +1,8 @@
 // Manejo de herramientas (checkboxes)
 function initTools() {
-  const tools = document.querySelectorAll('.sidebar input[type="checkbox"]');
+  const tools = document.querySelectorAll(
+    '.sidebar-left input[type="checkbox"]',
+  );
 
   // Solo permitir un checkbox activo a la vez
   tools.forEach((tool) => {
