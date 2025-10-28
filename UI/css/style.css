@@ -4,14 +4,14 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: #fff;
+  background: #ddf;
 }
 
 .container {
   display: flex;
   height: 80vh; /* Altura fija del área de trabajo */
   width: 80vw;
-  border: 2px solid #ccc;
+  border: 2px solid #888;
 }
 
 .sidebar {
@@ -27,8 +27,8 @@ body {
 
 .canvas {
   flex: 1;
-  background: white;
-  border-left: 2px solid #ccc;
+  background: #fff;
+  border-left: 2px solid #ddd;
   height: 100%; /* Iguala la altura al contenedor */
   cursor: crosshair;
   user-select: none;
