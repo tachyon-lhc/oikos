@@ -6,6 +6,7 @@ const state = {
   btnDraw: null,
   btnDelete: null,
   btnMove: null,
+  btnExport: null,
 
   // Estado de la aplicación
   mode: null, // 'draw', 'delete', 'move'

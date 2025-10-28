@@ -8,6 +8,9 @@ function collectRoomData() {
 
   groups.forEach((group) => {
     const rect = group.querySelector(".rectangle");
+
+    if (!rect) return;
+
     const tipo = rect.getAttribute("data-tipo") || "sin-definir";
 
     const x = parseFloat(rect.getAttribute("x"));
@@ -15,12 +18,23 @@ function collectRoomData() {
     const ancho = parseFloat(rect.getAttribute("width"));
     const alto = parseFloat(rect.getAttribute("height"));
 
+    // Filtrar rectángulos inválidos (muy pequeños o sin dimensiones)
+    if (ancho < 5 || alto < 5) {
+      console.warn("Rectángulo ignorado por dimensiones inválidas:", {
+        x,
+        y,
+        ancho,
+        alto,
+      });
+      return;
+    }
+
     habitaciones.push({
       tipo: tipo,
-      x: x,
-      y: y,
-      ancho: ancho,
-      alto: alto,
+      x: Math.round(x),
+      y: Math.round(y),
+      ancho: Math.round(ancho),
+      alto: Math.round(alto),
     });
   });
 
@@ -52,18 +66,11 @@ function downloadJSON(data, filename = "plano.json") {
 function initExport() {
   const btnExport = document.getElementById("btn-est-exp");
 
-  btnExport.addEventListener("change", () => {
-    if (btnExport.checked) {
-      // Recolectar datos
-      const data = collectRoomData();
-
-      // Descargar JSON
-      downloadJSON(data);
-
-      // Desmarcar el checkbox
-      btnExport.checked = false;
-
-      console.log("JSON exportado:", data);
-    }
+  btnExport.addEventListener("click", () => {
+    // Recolectar datos
+    const data = collectRoomData();
+    // Descargar JSON
+    downloadJSON(data);
+    console.log("JSON exportado:", data);
   });
 }
