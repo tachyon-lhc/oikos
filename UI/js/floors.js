@@ -1,34 +1,14 @@
 // Manejo de cambio entre pisos
 
-function initFloorSelector() {
-  const floorButtons = document.querySelectorAll(".floor-btn");
+const floors = document.querySelectorAll('.floors input[type="checkbox"]');
 
-  floorButtons.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const floor = parseInt(btn.getAttribute("data-floor"));
-
-      // Cambiar piso activo
-      switchToFloor(floor);
-
-      // Actualizar botón activo
-      floorButtons.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-    });
+function showOnlyFloor(floorNumber) {
+  document.querySelectorAll(".rectangle-group").forEach((group) => {
+    const groupFloor = parseInt(group.getAttribute("data-floor"));
+    if (groupFloor === floorNumber) {
+      group.style.display = "block";
+    } else {
+      group.style.display = "none";
+    }
   });
-}
-
-function switchToFloor(floor) {
-  // Ocultar todos los canvas
-  Object.values(state.canvases).forEach((canvas) => {
-    canvas.style.display = "none";
-  });
-
-  // Mostrar el canvas seleccionado
-  state.canvases[floor].style.display = "block";
-
-  // Actualizar canvas activo en el state
-  state.svg = state.canvases[floor];
-  state.currentFloor = floor;
-
-  console.log(`Cambiado a piso ${floor}`);
 }
