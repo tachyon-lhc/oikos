@@ -7,15 +7,26 @@
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
+    <div class="floors" id="floors">
+      <h3>Piso:</h3>
+      <input type="checkbox" data-group="floors" id="floor0" />
+      <label class="btn-floor" for="floor0">sub</label>
+      <input type="checkbox" data-group="floors" id="floor1" />
+      <label class="btn-floor" for="floor1">1</label>
+      <input type="checkbox" data-group="floors" id="floor2" />
+      <label class="btn-floor" for="floor2">2</label>
+      <input type="checkbox" data-group="floors" id="floor3" />
+      <label class="btn-floor" for="floor3">3</label>
+    </div>
     <div class="container">
       <div class="sidebar sidebar-left">
-        <input type="checkbox" id="btn-est-rect" />
+        <input type="checkbox" data-group="sidebar-left" id="btn-est-rect" />
         <label for="btn-est-rect" class="tool-btn" id="rectTool"
           >Rectángulo</label
         >
-        <input type="checkbox" id="btn-est-move" />
+        <input type="checkbox" data-group="sidebar-left" id="btn-est-move" />
         <label for="btn-est-move" class="tool-btn" id="moveTool">Mover</label>
-        <input type="checkbox" id="btn-est-clean" />
+        <input type="checkbox" data-group="sidebar-left" id="btn-est-clean" />
         <label for="btn-est-clean" class="tool-btn" id="deleteTool"
           >Borrar</label
         >
