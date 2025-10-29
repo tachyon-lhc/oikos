@@ -27,17 +27,6 @@ function detectCorner(mouseX, mouseY, rect, threshold = 30) {
   return null; // No está cerca de ninguna esquina
 }
 
-function showOnlyFloor(floorNumber) {
-  document.querySelectorAll(".rectangle-group").forEach((group) => {
-    const groupFloor = parseInt(group.getAttribute("data-floor"));
-    if (groupFloor === floorNumber) {
-      group.style.display = "block";
-    } else {
-      group.style.display = "none";
-    }
-  });
-}
-
 function initCanvas() {
   // Empezar a dibujar
 

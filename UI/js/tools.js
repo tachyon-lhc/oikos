@@ -1,19 +1,21 @@
 // Manejo de herramientas (checkboxes)
 function initTools() {
-  const tools = document.querySelectorAll(
-    '.sidebar-left input[type="checkbox"]',
-  );
-
-  // Solo permitir un checkbox activo a la vez
-  tools.forEach((tool) => {
-    tool.addEventListener("change", () => {
-      if (tool.checked) {
-        tools.forEach((other) => {
-          if (other !== tool) other.checked = false;
-        });
+  function handleSingleCheckbox(containerSelector) {
+    const container = document.querySelector(containerSelector);
+    container.addEventListener("change", (e) => {
+      if (e.target.type === "checkbox") {
+        container
+          .querySelectorAll('input[type="checkbox"]')
+          .forEach((checkbox) => {
+            if (checkbox !== e.target) checkbox.checked = false;
+          });
       }
     });
-  });
+  }
+
+  // Solo permitir un checkbox activo a la vez
+  handleSingleCheckbox(".sidebar-left");
+  handleSingleCheckbox(".floors");
 
   // Configurar modo de dibujo
   state.btnDraw.addEventListener("change", () => {
