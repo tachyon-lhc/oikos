@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initCanvas();
   initContextMenu();
   initExport();
+  initFloors();
 
   console.log("Aplicación inicializada correctamente");
 });

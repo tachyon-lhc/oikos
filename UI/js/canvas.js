@@ -32,8 +32,6 @@ function initCanvas() {
 
   state.svg.addEventListener("mousedown", (e) => {
     if (state.contextMenu.style.display === "block") return;
-    showOnlyFloor(state.currentFloor);
-
     if (state.mode === "draw") {
       state.isDrawing = true;
       const rect = state.svg.getBoundingClientRect();
