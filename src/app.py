@@ -76,4 +76,3 @@ if __name__ == "__main__":
     print("Servidor Flask iniciado")
     print("=" * 50)
     app.run(debug=True, port=5000)
-
