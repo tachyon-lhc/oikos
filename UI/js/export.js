@@ -79,38 +79,48 @@ function collectRoomData() {
   };
 }
 
-function downloadJSON(data, filename = "plano.json") {
-  // Convertir objeto a JSON string
-  const jsonStr = JSON.stringify(data, null, 2);
-
-  // Crear blob
-  const blob = new Blob([jsonStr], { type: "application/json" });
-
-  // Crear URL temporal
-  const url = URL.createObjectURL(blob);
-
-  // Crear enlace temporal y simular click
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-
-  // Limpiar
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-}
-
 function initExport() {
   const btnExport = document.getElementById("btn-est-exp");
 
-  btnExport.addEventListener("click", () => {
+  btnExport.addEventListener("click", async () => {
     // Recolectar datos
     const data = collectRoomData();
 
-    // Descargar JSON
-    downloadJSON(data);
+    console.log("Enviando datos a Flask:", data);
 
-    console.log("JSON exportado:", data);
+    // Cambiar texto del botón mientras espera
+    btnExport.textContent = "Calculando...";
+    btnExport.disabled = true;
+
+    try {
+      // Enviar a Flask
+      const response = await fetch("http://localhost:5000/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error HTTP: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      console.log("Respuesta de Flask:", result);
+
+      // Mostrar resultado al usuario
+      alert(`Precio estimado: ${result.formatted_price}`);
+    } catch (error) {
+      console.error("Error al conectar con Flask:", error);
+      alert(
+        "Error al calcular el precio. Asegúrate de que el servidor Flask esté corriendo.",
+      );
+    } finally {
+      // Restaurar botón
+      btnExport.textContent = "Calcular valor";
+      btnExport.disabled = false;
+    }
   });
 }
