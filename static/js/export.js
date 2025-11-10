@@ -1,9 +1,9 @@
+// =============================
 // Exportar plano a JSON
-
+// =============================
 function collectRoomData() {
   // Buscar TODOS los grupos en el canvas
   const allGroups = document.querySelectorAll("#canvas .rectangle-group");
-
   console.log("Total de grupos encontrados:", allGroups.length);
 
   // Contadores
@@ -16,9 +16,7 @@ function collectRoomData() {
 
   allGroups.forEach((group) => {
     const floor = parseInt(group.getAttribute("data-floor"));
-    if (!isNaN(floor)) {
-      pisosDibujados.add(floor);
-    }
+    if (!isNaN(floor)) pisosDibujados.add(floor);
   });
 
   console.log("Pisos dibujados:", Array.from(pisosDibujados));
@@ -64,37 +62,45 @@ function collectRoomData() {
   const furnishingstatus = document.getElementById("furnishingstatus").value;
 
   return {
-    area: area,
-    bedrooms: bedrooms,
-    bathrooms: bathrooms,
-    stories: stories,
-    mainroad: mainroad,
+    area,
+    bedrooms,
+    bathrooms,
+    stories,
+    mainroad,
     guestroom: guestroom === 1 ? "yes" : "no",
     basement: basement === 1 ? "yes" : "no",
-    hotwaterheating: hotwaterheating,
-    airconditioning: airconditioning,
-    parking: parking,
-    prefarea: prefarea,
-    furnishingstatus: furnishingstatus,
+    hotwaterheating,
+    airconditioning,
+    parking,
+    prefarea,
+    furnishingstatus,
   };
 }
 
+// =============================
+// Inicializar Exportación
+// =============================
 function initExport() {
   const btnExport = document.getElementById("btn-est-exp");
 
   btnExport.addEventListener("click", async () => {
     // Recolectar datos
     const data = collectRoomData();
-
     console.log("Enviando datos a Flask:", data);
 
     // Cambiar texto del botón mientras espera
     btnExport.textContent = "Calculando...";
     btnExport.disabled = true;
 
+    // 🔥 Detectar entorno: local o Render
+    const API_URL =
+      window.location.hostname === "localhost"
+        ? "http://localhost:5000/predict"
+        : "/predict";
+
     try {
       // Enviar a Flask
-      const response = await fetch("http://localhost:5000/predict", {
+      const response = await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -107,15 +113,14 @@ function initExport() {
       }
 
       const result = await response.json();
-
       console.log("Respuesta de Flask:", result);
 
       // Mostrar resultado al usuario
-      alert(`Precio estimado: ${result.formatted_price}`);
+      alert(`💰 Precio estimado: ${result.formatted_price}`);
     } catch (error) {
       console.error("Error al conectar con Flask:", error);
       alert(
-        "Error al calcular el precio. Asegúrate de que el servidor Flask esté corriendo.",
+        "❌ Error al calcular el precio.\nAsegúrate de que el servidor Flask esté corriendo si estás en local.",
       );
     } finally {
       // Restaurar botón
