@@ -4,13 +4,13 @@ Diseña el plano de tu casa y obtén una predicción de precio instantánea usan
 
 ---
 
-## ✨ ¿Qué hace?
+## ¿Qué hace?
 
 Una aplicación web que te permite dibujar habitaciones interactivamente y predice el precio de la vivienda usando un modelo de Random Forest entrenado con 545 propiedades reales.
 
 ---
 
-## 🚀 Cómo usar
+## Cómo usar
 
 1. **Dibuja habitaciones** - Click y arrastra para crear espacios
 
@@ -20,13 +20,15 @@ Una aplicación web que te permite dibujar habitaciones interactivamente y predi
 
 4. **Obtén el precio** - Click en "Calcular valor"
 
-## Web oficial
+---
+
+## Web Oficial
 
 <https://oikos-hvpr.onrender.com/>
 
---
+---
 
-## 💻 Instalación Local
+## Instalación Local
 
 ```bash
 # Clonar
@@ -47,7 +49,7 @@ Abre `http://localhost:5000`
 
 ---
 
-## 🛠️ Stack Tecnológico
+## Stack Tecnológico
 
 **Frontend:** Vanilla JavaScript, SVG Canvas, CSS3  
 **Backend:** Flask, Python  
@@ -56,7 +58,7 @@ Abre `http://localhost:5000`
 
 ---
 
-## 📊 Rendimiento del Modelo
+## Rendimiento del Modelo
 
 - **R² Score:** 0.61 (explica el 61% de la varianza)
 - **Error promedio:** ~$1M USD
@@ -64,7 +66,7 @@ Abre `http://localhost:5000`
 
 ---
 
-## 📁 Estructura
+## Estructura
 
 ```
 ├── src/
@@ -78,6 +80,6 @@ Abre `http://localhost:5000`
 
 ---
 
-## 🤝 Contribuir
+## Contribuir
 
 Pull requests son bienvenidos. Para cambios grandes, abre un issue primero.
