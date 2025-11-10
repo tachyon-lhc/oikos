@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Oikos</title>
+    <link
+      href="{{ url_for('static', filename='css/style.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="floors" id="floors">
+      <h3>Piso:</h3>
+      <input type="checkbox" data-group="floors" id="floor0" />
+      <label class="btn-floor" for="floor0">0</label>
+      <input type="checkbox" data-group="floors" id="floor1" />
+      <label class="btn-floor" for="floor1">1</label>
+      <input type="checkbox" data-group="floors" id="floor2" />
+      <label class="btn-floor" for="floor2">2</label>
+      <input type="checkbox" data-group="floors" id="floor3" />
+      <label class="btn-floor" for="floor3">3</label>
+    </div>
+    <div class="container">
+      <div class="sidebar sidebar-left">
+        <input type="checkbox" data-group="sidebar-left" id="btn-est-rect" />
+        <label for="btn-est-rect" class="tool-btn" id="rectTool"
+          >Rectángulo</label
+        >
+        <input type="checkbox" data-group="sidebar-left" id="btn-est-move" />
+        <label for="btn-est-move" class="tool-btn" id="moveTool">Mover</label>
+        <input type="checkbox" data-group="sidebar-left" id="btn-est-clean" />
+        <label for="btn-est-clean" class="tool-btn" id="deleteTool"
+          >Borrar</label
+        >
+        <button type="click" class="tool-btn-exp" id="btn-est-exp">
+          Calcular valor
+        </button>
+      </div>
+      <svg class="canvas" id="canvas">
+        <defs>
+          <!-- Define el patrón de cuadrícula -->
+          <pattern
+            id="cuadricula"
+            width="60"
+            height="60"
+            patternUnits="userSpaceOnUse"
+          >
+            <!-- Dibuja las líneas de la cuadrícula -->
+            <path
+              d="M 60 0 L 0 0 0 60"
+              fill="none"
+              stroke="#333"
+              stroke-width="0.5"
+            />
+          </pattern>
+        </defs>
+
+        <!-- Usa el patrón para rellenar un rectángulo que cubra todo el SVG -->
+        <rect width="100%" height="100%" fill="url(#cuadricula)" />
+      </svg>
+      <div class="sidebar sidebar-right">
+        <div class="form-section">
+          <h3>Información adicional</h3>
+
+          <label>Área:</label>
+          <input type="number" id="area-metros" placeholder="ej: 120" min="1" />
+
+          <label>
+            <input type="checkbox" id="parking" />
+            Estacionamiento
+          </label>
+
+          <label>
+            <input type="checkbox" id="mainroad" />
+            Calle principal
+          </label>
+
+          <label>
+            <input type="checkbox" id="hotwaterheating" />
+            Calentador de agua
+          </label>
+
+          <label>
+            <input type="checkbox" id="airconditioning" />
+            Aire acondicionado
+          </label>
+
+          <label>
+            <input type="checkbox" id="prefarea" />
+            Área preferencial
+          </label>
+
+          <label>Estado del mobiliario:</label>
+          <select id="furnishingstatus">
+            <option value="unfurnished">Sin amueblar</option>
+            <option value="semi-furnished">Semi-amueblado</option>
+            <option value="furnished">Amueblado</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div id="contextMenu" class="context-menu">
+      <div class="menu-item" data-tipo="dormitorio">Dormitorio</div>
+      <div class="menu-item" data-tipo="cocina">Cocina</div>
+      <div class="menu-item" data-tipo="baño">Baño</div>
+      <div class="menu-item" data-tipo="sala">Sala/Living</div>
+      <div class="menu-item" data-tipo="comedor">Comedor</div>
+      <div class="menu-item" data-tipo="hab-invitados">Hab-Invitados</div>
+    </div>
+    <script src="{{ url_for('static', filename='js/state.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tools.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/canvas.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/contextMenu.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/export.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/floors.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
