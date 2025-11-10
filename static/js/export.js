@@ -96,7 +96,8 @@ function initExport() {
     const API_URL =
       window.location.hostname === "localhost"
         ? "http://localhost:5000/predict"
-        : "https://oikos-backend.onrender.com/predict";
+        : `${window.location.origin}/predict`;
+    console.log("Usando endpoint:", API_URL);
     try {
       // Enviar a Flask
       const response = await fetch(API_URL, {
