@@ -1,14 +1,18 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import joblib
 import os
+import sys
+
+# Agregar directorio src al path para imports
+sys.path.insert(0, os.path.dirname(__file__))
 from data_utils import prepare_input
 
-app = Flask(__name__)
-CORS(app)  # Permitir requests desde tu frontend
+app = Flask(__name__, template_folder="../templates", static_folder="../static")
+CORS(app)
 
 # Cargar modelo al iniciar
-MODEL_PATH = "src/models/price_model.pkl"
+MODEL_PATH = os.path.join(os.path.dirname(__file__), "models/price_model.pkl")
 model = None
 
 
@@ -24,11 +28,18 @@ def load_model():
 
 @app.route("/")
 def home():
+    """Sirve el HTML principal"""
+    return render_template("index.html")
+
+
+@app.route("/api/status")
+def status():
+    """Endpoint para verificar que la API funciona"""
     return jsonify(
         {
             "status": "ok",
             "message": "API de predicción de precios de viviendas",
-            "endpoints": {"/predict": "POST - Envía JSON con datos de la casa"},
+            "model_loaded": model is not None,
         }
     )
 
@@ -67,6 +78,9 @@ def predict():
 
     except Exception as e:
         print(f"Error en predicción: {str(e)}")
+        import traceback
+
+        traceback.print_exc()
         return jsonify({"error": str(e)}), 400
 
 
