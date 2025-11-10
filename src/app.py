@@ -47,26 +47,22 @@ def status():
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
-        # Obtener JSON del request
         data = request.get_json()
-
         print("\n--- Nueva predicción ---")
         print(f"Datos recibidos: {data}")
 
-        # Validar que el modelo esté cargado
         if model is None:
             return jsonify(
                 {"error": "Modelo no cargado. Ejecuta train_model.py primero"}
             ), 500
 
-        # Preprocesar input
+        print("➡️ Preprocesando input...")
         X = prepare_input(data)
-        print(f"Features preparados: {X.values[0]}")
+        print(f"✅ Features preparados: {X.columns.tolist()} -> {X.values[0]}")
 
-        # Hacer predicción
+        print("➡️ Ejecutando predicción...")
         prediction = model.predict(X)[0]
-
-        print(f"Predicción: ${prediction:,.2f}")
+        print(f"✅ Predicción: ${prediction:,.2f}")
 
         return jsonify(
             {
@@ -77,11 +73,11 @@ def predict():
         )
 
     except Exception as e:
-        print(f"Error en predicción: {str(e)}")
         import traceback
 
-        traceback.print_exc()
-        return jsonify({"error": str(e)}), 400
+        print("❌ Error en predicción:")
+        print(traceback.format_exc())  # Esto imprime el error completo
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == "__main__":
