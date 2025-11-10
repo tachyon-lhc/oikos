@@ -3,12 +3,13 @@ import pandas as pd
 
 
 def load_data(filepath=None):
-    """Carga el dataset del CSV de forma segura en local y en Render"""
+    """Carga el dataset del CSV de forma segura en local y en Render."""
     if filepath is None:
-        # Ruta absoluta basada en la ubicación de este archivo
-        base_dir = os.path.dirname(os.path.abspath(__file__))
-        filepath = os.path.join(base_dir, "../data/Housing.csv")
+        # Carpeta raíz del proyecto (donde está requirements.txt)
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        filepath = os.path.join(project_root, "data", "Housing.csv")
 
+    print(f"Cargando dataset desde: {filepath}")  # <- debug útil
     df = pd.read_csv(filepath)
     return df
 
