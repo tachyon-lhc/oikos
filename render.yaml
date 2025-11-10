@@ -6,4 +6,3 @@ services:
     startCommand: "gunicorn app:app"
     envVars:
       PYTHON_VERSION: 3.10.13
-    rootDir: src
