@@ -1,0 +1,32 @@
+{
+  "habitaciones": [
+    {
+      "tipo": "cocina",
+      "x": 64,
+      "y": 62,
+      "ancho": 176,
+      "alto": 237
+    },
+    {
+      "tipo": "dormitorio",
+      "x": 240,
+      "y": 62,
+      "ancho": 223,
+      "alto": 237
+    },
+    {
+      "tipo": "sala",
+      "x": 63,
+      "y": 297,
+      "ancho": 176,
+      "alto": 188
+    },
+    {
+      "tipo": "baño",
+      "x": 241,
+      "y": 297,
+      "ancho": 106,
+      "alto": 104
+    }
+  ]
+}
