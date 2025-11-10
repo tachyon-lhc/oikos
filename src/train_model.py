@@ -13,7 +13,9 @@ def train_and_evaluate():
     Entrena el modelo y muestra métricas de evaluación
     """
     print("Cargando datos...")
-    df = load_data("../data/Housing.csv")
+    df = pd.read_csv(
+        os.path.join(os.path.dirname(__file__), "..", "data", "Housing.csv")
+    )
 
     print(f"Dataset cargado: {df.shape[0]} filas, {df.shape[1]} columnas")
     print(f"\nPrimeras filas:\n{df.head()}")
