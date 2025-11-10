@@ -52,13 +52,11 @@ def predict():
         print(f"Datos recibidos: {data}")
 
         if model is None:
-            return jsonify(
-                {"error": "Modelo no cargado. Ejecuta train_model.py primero"}
-            ), 500
+            return jsonify({"error": "Modelo no cargado"}), 500
 
         print("➡️ Preprocesando input...")
         X = prepare_input(data)
-        print(f"✅ Features preparados: {X.columns.tolist()} -> {X.values[0]}")
+        print(f"✅ Features preparados: {list(X.columns)}")
 
         print("➡️ Ejecutando predicción...")
         prediction = model.predict(X)[0]
@@ -76,7 +74,7 @@ def predict():
         import traceback
 
         print("❌ Error en predicción:")
-        print(traceback.format_exc())  # Esto imprime el error completo
+        traceback.print_exc()  # imprime toda la traza
         return jsonify({"error": str(e)}), 500
 
 
