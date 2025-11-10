@@ -17,6 +17,3 @@ ENV/
 # Sistema
 .DS_Store
 Thumbs.db
-
-# No subir datos sensibles
-data/

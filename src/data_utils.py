@@ -1,8 +1,14 @@
+import os
 import pandas as pd
 
 
-def load_data(filepath="../data/Housing.csv"):
-    """Carga el dataset del csv"""
+def load_data(filepath=None):
+    """Carga el dataset del CSV de forma segura en local y en Render"""
+    if filepath is None:
+        # Ruta absoluta basada en la ubicación de este archivo
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        filepath = os.path.join(base_dir, "../data/Housing.csv")
+
     df = pd.read_csv(filepath)
     return df
 
