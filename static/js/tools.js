@@ -1,3 +1,90 @@
+// Datos de ubicaciones
+const UBICACIONES = {
+  "GBA Norte": [
+    "Pilar",
+    "Escobar",
+    "Tigre",
+    "San Isidro",
+    "San Miguel",
+    "General San Martin",
+    "Vicente Lopez",
+    "Malvinas Argentina",
+    "San Fernando",
+  ],
+  "GBA Oeste": [
+    "La Matanza",
+    "Moron",
+    "Ituzaingo",
+    "Moreno",
+    "Merlo",
+    "Castelar",
+    "Tres de Febrero",
+    "Hurlingham",
+  ],
+  "GBA Sur": [
+    "La Plata",
+    "Esteban Echeverria",
+    "Quilmes",
+    "Lomas de Zamora",
+    "Ezeiza",
+    "Berazategui",
+    "Lanus",
+    "Almirante Brown",
+    "Avellaneda",
+  ],
+  Córdoba: ["Córdoba", "Punilla", "Colon", "Villa Carlos Paz", "Santa Maria"],
+  "Costa Atlántica": [
+    "Mar del Plata",
+    "Costa Esmeralda",
+    "Pinamar",
+    "Mar del Tuyu",
+    "Villa Gesell",
+    "Mar de Ajo",
+  ],
+  "Buenos Aires Interior": ["Lujan", "San Vicente"],
+};
+
+// Manejo del selector de ubicación
+function initLocationSelectors() {
+  const regionSelect = document.getElementById("region-select");
+  const localidadSelect = document.getElementById("localidad-select");
+
+  if (!regionSelect || !localidadSelect) return;
+
+  regionSelect.addEventListener("change", function () {
+    const regionSeleccionada = this.value;
+
+    // Limpiar localidades
+    localidadSelect.innerHTML =
+      '<option value="">Seleccionar localidad...</option>';
+
+    if (regionSeleccionada && UBICACIONES[regionSeleccionada]) {
+      // Habilitar el select de localidad
+      localidadSelect.disabled = false;
+
+      // Agregar las localidades de la región seleccionada
+      UBICACIONES[regionSeleccionada].forEach((localidad) => {
+        const option = document.createElement("option");
+        option.value = localidad;
+        option.textContent = localidad;
+        localidadSelect.appendChild(option);
+      });
+    } else {
+      localidadSelect.disabled = true;
+    }
+  });
+
+  localidadSelect.addEventListener("change", function () {
+    const region = regionSelect.value;
+    const localidad = this.value;
+
+    if (region && localidad) {
+      console.log(`Ubicación seleccionada: ${region} - ${localidad}`);
+      // Aquí puedes agregar lógica adicional cuando se seleccione una localidad
+    }
+  });
+}
+
 // Manejo de herramientas (checkboxes)
 function initTools() {
   function handleSingleCheckbox(containerSelector) {
@@ -12,11 +99,9 @@ function initTools() {
       }
     });
   }
-
   // Solo permitir un checkbox activo a la vez
   handleSingleCheckbox(".sidebar-left");
   handleSingleCheckbox(".floors");
-
   // Configurar modo de dibujo
   state.btnDraw.addEventListener("change", () => {
     if (state.btnDraw.checked) {
@@ -28,7 +113,6 @@ function initTools() {
       state.btnDraw.classList.remove("active");
     }
   });
-
   // Configurar modo de borrado
   state.btnDelete.addEventListener("change", () => {
     if (state.btnDelete.checked) {
@@ -40,7 +124,6 @@ function initTools() {
       state.btnDelete.classList.remove("active");
     }
   });
-
   // Configurar modo mover
   state.btnMove.addEventListener("change", () => {
     if (state.btnMove.checked) {
@@ -52,4 +135,7 @@ function initTools() {
       state.btnMove.classList.remove("active");
     }
   });
+
+  // Inicializar selectores de ubicación
+  initLocationSelectors();
 }
