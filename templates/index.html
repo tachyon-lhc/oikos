@@ -33,9 +33,6 @@
         <label for="btn-est-clean" class="tool-btn" id="deleteTool"
           >Borrar</label
         >
-        <button type="click" class="tool-btn-exp" id="btn-est-exp">
-          Calcular valor
-        </button>
       </div>
       <svg class="canvas" id="canvas">
         <defs>
@@ -63,40 +60,34 @@
         <div class="form-section">
           <h3>Información adicional</h3>
 
+          <label>Ubicación:</label>
+          <select id="region-select">
+            <option value="">Seleccionar región...</option>
+            <option value="GBA Norte">GBA Norte</option>
+            <option value="GBA Oeste">GBA Oeste</option>
+            <option value="GBA Sur">GBA Sur</option>
+            <option value="Córdoba">Córdoba</option>
+            <option value="Costa Atlántica">Costa Atlántica</option>
+            <option value="Buenos Aires Interior">Buenos Aires Interior</option>
+          </select>
+
+          <label style="margin-top: 15px">Localidad:</label>
+          <select id="localidad-select" disabled>
+            <option value="">Primero seleccione una región</option>
+          </select>
+
           <label>Área:</label>
           <input type="number" id="area-metros" placeholder="ej: 120" min="1" />
-
-          <label>
-            <input type="checkbox" id="parking" />
-            Estacionamiento
-          </label>
-
-          <label>
-            <input type="checkbox" id="mainroad" />
-            Calle principal
-          </label>
-
-          <label>
-            <input type="checkbox" id="hotwaterheating" />
-            Calentador de agua
-          </label>
-
-          <label>
-            <input type="checkbox" id="airconditioning" />
-            Aire acondicionado
-          </label>
-
-          <label>
-            <input type="checkbox" id="prefarea" />
-            Área preferencial
-          </label>
-
-          <label>Estado del mobiliario:</label>
-          <select id="furnishingstatus">
-            <option value="unfurnished">Sin amueblar</option>
-            <option value="semi-furnished">Semi-amueblado</option>
-            <option value="furnished">Amueblado</option>
-          </select>
+        </div>
+        <div style="padding: 20px; margin-top: auto">
+          <button
+            type="click"
+            class="tool-btn-exp"
+            id="btn-est-exp"
+            style="margin-top: 40px; width: 100%"
+          >
+            Calcular valor
+          </button>
         </div>
       </div>
     </div>
