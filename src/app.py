@@ -174,7 +174,7 @@ if __name__ == "__main__":
     print("Estado del modelo:", "✓ OK" if model else "✗ Error")
     print("Estado de encoders:", "✓ OK" if (le_zone and le_city) else "✗ Error")
     print("=" * 50)
-    app.run(debug=True, port=5000)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
 else:
     # Cuando Gunicorn importa la app
     load_model()
