@@ -7,28 +7,17 @@ function collectRoomData() {
   console.log("Total de grupos encontrados:", allGroups.length);
 
   // Contadores
-  let bedrooms = 0;
+  let rooms = 0; // Ambientes habitables
   let bathrooms = 0;
-  let guestroom = 0;
 
-  // Detectar qué pisos tienen grupos dibujados
-  const pisosDibujados = new Set();
-
-  allGroups.forEach((group) => {
-    const floor = parseInt(group.getAttribute("data-floor"));
-    if (!isNaN(floor)) pisosDibujados.add(floor);
-  });
-
-  console.log("Pisos dibujados:", Array.from(pisosDibujados));
-
-  // Basement = true si existe piso 0
-  const basement = pisosDibujados.has(0) ? 1 : 0;
-
-  // Stories = cantidad de pisos (excluyendo el 0/sótano)
-  const stories = Array.from(pisosDibujados).filter((p) => p > 0).length;
-
-  console.log("Basement detectado:", basement);
-  console.log("Stories detectados:", stories);
+  // Tipos que cuentan como "ambientes" en Argentina
+  const ambientesValidos = [
+    "dormitorio",
+    "cocina",
+    "sala",
+    "comedor",
+    "hab-invitados",
+  ];
 
   // Contar habitaciones (solo las válidas)
   allGroups.forEach((group) => {
@@ -42,38 +31,35 @@ function collectRoomData() {
     // Filtrar rectángulos inválidos
     if (ancho < 5 || alto < 5) return;
 
-    // Contar tipos de habitaciones (total, sin importar el piso)
-    if (tipo === "dormitorio") bedrooms++;
-    if (tipo === "baño") bathrooms++;
-    if (tipo === "hab-invitados") guestroom = 1;
+    // Contar ambientes (espacios habitables principales)
+    if (ambientesValidos.includes(tipo)) {
+      rooms++;
+    }
+
+    // Contar baños (no cuentan como ambientes)
+    if (tipo === "baño") {
+      bathrooms++;
+    }
   });
 
   // Obtener datos del formulario
   const area = parseInt(document.getElementById("area-metros").value) || 0;
-  const parking = document.getElementById("parking").checked ? 1 : 0;
-  const mainroad = document.getElementById("mainroad").checked ? "yes" : "no";
-  const hotwaterheating = document.getElementById("hotwaterheating").checked
-    ? "yes"
-    : "no";
-  const airconditioning = document.getElementById("airconditioning").checked
-    ? "yes"
-    : "no";
-  const prefarea = document.getElementById("prefarea").checked ? "yes" : "no";
-  const furnishingstatus = document.getElementById("furnishingstatus").value;
+  const region = document.getElementById("region-select").value || "";
+  const localidad = document.getElementById("localidad-select").value || "";
+
+  // Combinar ubicación completa
+  const location = localidad && region ? `${region} - ${localidad}` : "";
+
+  console.log(`Ambientes contados: ${rooms} (${ambientesValidos.join(", ")})`);
+  console.log(`Baños contados: ${bathrooms}`);
 
   return {
-    area,
-    bedrooms,
+    rooms,
     bathrooms,
-    stories,
-    mainroad,
-    guestroom: guestroom === 1 ? "yes" : "no",
-    basement: basement === 1 ? "yes" : "no",
-    hotwaterheating,
-    airconditioning,
-    parking,
-    prefarea,
-    furnishingstatus,
+    area,
+    location,
+    region,
+    localidad,
   };
 }
 
@@ -86,6 +72,23 @@ function initExport() {
   btnExport.addEventListener("click", async () => {
     // Recolectar datos
     const data = collectRoomData();
+
+    // Validar que se hayan completado los campos obligatorios
+    if (!data.area) {
+      alert("⚠️ Por favor ingresa el área en metros cuadrados");
+      return;
+    }
+
+    if (!data.location) {
+      alert("⚠️ Por favor selecciona la región y localidad");
+      return;
+    }
+
+    if (data.rooms === 0) {
+      alert("⚠️ Por favor dibuja al menos un ambiente en el plano");
+      return;
+    }
+
     console.log("Enviando datos a Flask:", data);
 
     // Cambiar texto del botón mientras espera
@@ -97,7 +100,9 @@ function initExport() {
       window.location.hostname === "localhost"
         ? "http://localhost:5000/predict"
         : `${window.location.origin}/predict`;
+
     console.log("Usando endpoint:", API_URL);
+
     try {
       // Enviar a Flask
       const response = await fetch(API_URL, {
