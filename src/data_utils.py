@@ -7,7 +7,7 @@ def load_data(filepath=None):
     if filepath is None:
         # Carpeta raíz del proyecto (donde está requirements.txt)
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        filepath = os.path.join(project_root, "data", "Housing.csv")
+        filepath = os.path.join(project_root, "data", "housing.csv")
 
     print(f"Cargando dataset desde: {filepath}")  # <- debug útil
     df = pd.read_csv(filepath)
@@ -23,6 +23,7 @@ def preprocess_data(df):
     """
     df_processed = df.copy()
 
+    """
     # Convertir yes-no en 1-0
     yes_no_columns = [
         "mainroad",
@@ -41,6 +42,8 @@ def preprocess_data(df):
         furnishing_map
     )
 
+    """
+    # Separar features y target
     return df_processed
 
 
@@ -51,6 +54,7 @@ def prepare_input(json_data):
     # Crear dataframe con una fila
     df = pd.DataFrame([json_data])
 
+    """
     # Asegurarse de que yes/no se conviertan a 1/0
     yes_no_columns = [
         "mainroad",
@@ -85,5 +89,6 @@ def prepare_input(json_data):
         "prefarea",
         "furnishingstatus",
     ]
+    """
 
-    return df[feature_order]
+    return df
