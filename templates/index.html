@@ -8,8 +8,16 @@
       href="{{ url_for('static', filename='css/style.css') }}"
       rel="stylesheet"
     />
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
+    <div class="logo-geometric">
+      <div class="house-icon">
+        <div class="roof"></div>
+        <div class="base"></div>
+      </div>
+      <span>Oikos</span>
+    </div>
     <div class="floors" id="floors">
       <h3>Piso:</h3>
       <input type="checkbox" data-group="floors" id="floor0" />
@@ -24,15 +32,18 @@
     <div class="container">
       <div class="sidebar sidebar-left">
         <input type="checkbox" data-group="sidebar-left" id="btn-est-rect" />
-        <label for="btn-est-rect" class="tool-btn" id="rectTool"
-          >Rectángulo</label
-        >
+        <label for="btn-est-rect" class="tool-btn" id="rectTool">
+          <i data-lucide="square"></i>
+        </label>
         <input type="checkbox" data-group="sidebar-left" id="btn-est-move" />
-        <label for="btn-est-move" class="tool-btn" id="moveTool">Mover</label>
+        <label for="btn-est-move" class="tool-btn" id="moveTool">
+          <i data-lucide="move"></i>
+        </label>
+
         <input type="checkbox" data-group="sidebar-left" id="btn-est-clean" />
-        <label for="btn-est-clean" class="tool-btn" id="deleteTool"
-          >Borrar</label
-        >
+        <label for="btn-est-clean" class="tool-btn" id="deleteTool">
+          <i data-lucide="eraser"></i>
+        </label>
       </div>
       <svg class="canvas" id="canvas">
         <defs>
@@ -106,5 +117,9 @@
     <script src="{{ url_for('static', filename='js/export.js') }}"></script>
     <script src="{{ url_for('static', filename='js/floors.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <script>
+      lucide.createIcons();
+    </script>
   </body>
 </html>
