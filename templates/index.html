@@ -47,14 +47,12 @@
       </div>
       <svg class="canvas" id="canvas">
         <defs>
-          <!-- Define el patrón de cuadrícula -->
           <pattern
             id="cuadricula"
             width="60"
             height="60"
             patternUnits="userSpaceOnUse"
           >
-            <!-- Dibuja las líneas de la cuadrícula -->
             <path
               d="M 60 0 L 0 0 0 60"
               fill="none"
@@ -71,6 +69,13 @@
         <div class="form-section">
           <h3>Información adicional</h3>
 
+          <label>Área:</label>
+          <input
+            type="number"
+            id="area-metros"
+            placeholder="ej: 120 "
+            min="1"
+          />
           <label>Ubicación:</label>
           <select id="region-select">
             <option value="">Seleccionar región...</option>
@@ -86,9 +91,6 @@
           <select id="localidad-select" disabled>
             <option value="">Primero seleccione una región</option>
           </select>
-
-          <label>Área:</label>
-          <input type="number" id="area-metros" placeholder="ej: 120" min="1" />
         </div>
         <div style="padding: 20px; margin-top: auto">
           <button

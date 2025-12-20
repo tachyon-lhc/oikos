@@ -158,10 +158,11 @@ body {
 }
 
 .sidebar-right h3 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
   color: #1e293b;
   margin-bottom: 20px;
+  padding-top: 4px;
 }
 
 .sidebar-right label {
@@ -169,7 +170,9 @@ body {
   font-size: 14px;
   font-weight: 500;
   color: #475569;
+  font-size: 22px;
   margin-bottom: 8px;
+  padding-top: 14px;
   margin-top: 20px;
 }
 
@@ -181,7 +184,7 @@ body {
   border-radius: 8px;
   background: white;
   color: #1e293b;
-  font-size: 14px;
+  font-size: 18px;
   transition: all 0.2s ease;
 }
 
