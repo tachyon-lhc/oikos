@@ -120,17 +120,18 @@ function initExport() {
       const result = await response.json();
       console.log("Respuesta de Flask:", result);
 
-      // Mostrar resultado al usuario
-      alert(`💰 Precio estimado: ${result.formatted_price}`);
+      // 🎉 Mostrar modal en lugar de alert
+      showPriceModal(result.formatted_price, {
+        rooms: data.rooms,
+        bathrooms: data.bathrooms,
+        area: data.area,
+        location: data.location,
+      });
     } catch (error) {
       console.error("Error al conectar con Flask:", error);
       alert(
         "❌ Error al calcular el precio.\nAsegúrate de que el servidor Flask esté corriendo si estás en local.",
       );
-    } finally {
-      // Restaurar botón
-      btnExport.textContent = "Calcular valor";
-      btnExport.disabled = false;
     }
   });
 }
