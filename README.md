@@ -31,6 +31,12 @@ En el cual scapreo datos de Mercado Libre Inmuebles. En más de 30 localidades d
 
 ![draw-select](./images/draw-select.gif)
 
+1. Mover habitaciones - Click y mantener con la herramienta seleccionada
+
+2. Scalar habitaciones - Click y mantener en las esquinas de los bloques
+
+![move-scaling](./images/move-scaling.gif)
+
 1. **Completa los datos** - Área total, características adicionales
 
 ![additional-information](./images/additional_information.gif)
