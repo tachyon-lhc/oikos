@@ -4,11 +4,24 @@ Diseña el plano de tu casa y obtén una predicción de precio instantánea usan
 
 ---
 
-## ¿Qué hace?
+## Web Oficial
 
-Una aplicación web que te permite dibujar habitaciones interactivamente y predice el precio de la vivienda usando un modelo de Random Forest entrenado con 545 propiedades reales.
+<https://oikos-hvpr.onrender.com/>
+
+## ![principal](./images/oikos-principal.png)
 
 ---
+
+## ¿Qué hace?
+
+Una aplicación web que te permite dibujar habitaciones interactivamente y predice el precio de la vivienda usando un modelo de Random Forest entrenado con más de 21k propiedades reales.
+
+---
+
+## De donde obtiene los datos?
+
+Obtuve los datos mediante un scraper que puedes encontrar en mi repositorio: <https://github.com/tachyon-lhc/ml-web-sraping>
+En el cual scapreo datos de Mercado Libre Inmuebles. En más de 30 localidades de Buenos Aires.
 
 ## Cómo usar
 
@@ -16,36 +29,31 @@ Una aplicación web que te permite dibujar habitaciones interactivamente y predi
 
 2. **Etiqueta cada espacio** - Click derecho → selecciona el tipo
 
-3. **Completa los datos** - Área total, características adicionales
+![draw-select](./images/draw-select.gif)
 
-4. **Obtén el precio** - Click en "Calcular valor"
+1. **Completa los datos** - Área total, características adicionales
 
----
+![additional-information](./images/additional_information.gif)
 
-## Web Oficial
+1. **Obtén el precio** - Click en "Calcular valor"
 
-<https://oikos-hvpr.onrender.com/>
-
----
+![show-price](./images/show_results.png)
 
 ## Instalación Local
 
 ```bash
 # Clonar
-git clone https://github.com/tu-usuario/house-price-predictor.git
-cd house-price-predictor
+git clone https://github.com/tachyon/oikos.git
+cd oikos
 
 # Instalar dependencias
 python -m venv venv
 source venv/bin/activate
-pip install -r requirements.txt
+pip install -r src/requirements.txt
 
 # Entrenar modelo y correr
-python src/train_model.py
 python src/app.py
 ```
-
-Abre `http://localhost:5000`
 
 ---
 
@@ -60,9 +68,7 @@ Abre `http://localhost:5000`
 
 ## Rendimiento del Modelo
 
-- **R² Score:** 0.61 (explica el 61% de la varianza)
-- **Error promedio:** ~$1M USD
-- **Feature más importante:** Área total (47%)
+- **R² Score:** 0.8 (explica el 80% de la varianza)
 
 ---
 
