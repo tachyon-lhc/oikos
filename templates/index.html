@@ -24,7 +24,7 @@
       <span>Oikos</span>
     </div>
     <div class="floors" id="floors">
-      <h3>Piso:</h3>
+      <h3>Floor:</h3>
       <input type="checkbox" data-group="floors" id="floor0" />
       <label class="btn-floor" for="floor0">0</label>
       <input type="checkbox" data-group="floors" id="floor1" />
@@ -72,18 +72,18 @@
       </svg>
       <div class="sidebar sidebar-right">
         <div class="form-section">
-          <h3>Información adicional</h3>
+          <h3>additional information</h3>
 
-          <label>Área:</label>
+          <label>Area:</label>
           <input
             type="number"
             id="area-metros"
-            placeholder="ej: 120 "
+            placeholder="eg: 120 "
             min="1"
           />
-          <label>Ubicación:</label>
+          <label>Region:</label>
           <select id="region-select">
-            <option value="">Seleccionar región...</option>
+            <option value="">Select region...</option>
             <option value="GBA Norte">GBA Norte</option>
             <option value="GBA Oeste">GBA Oeste</option>
             <option value="GBA Sur">GBA Sur</option>
@@ -92,9 +92,9 @@
             <option value="Buenos Aires Interior">Buenos Aires Interior</option>
           </select>
 
-          <label style="margin-top: 15px">Localidad:</label>
+          <label style="margin-top: 15px">City:</label>
           <select id="localidad-select" disabled>
-            <option value="">Primero seleccione una región</option>
+            <option value="">First select a region</option>
           </select>
         </div>
         <div style="padding: 20px; margin-top: auto">
@@ -104,18 +104,18 @@
             id="btn-est-exp"
             style="margin-top: 40px; width: 100%"
           >
-            Calcular valor
+            Calculate Value
           </button>
         </div>
       </div>
     </div>
     <div id="contextMenu" class="context-menu">
-      <div class="menu-item" data-tipo="dormitorio">Dormitorio</div>
-      <div class="menu-item" data-tipo="cocina">Cocina</div>
-      <div class="menu-item" data-tipo="baño">Baño</div>
-      <div class="menu-item" data-tipo="sala">Sala/Living</div>
-      <div class="menu-item" data-tipo="comedor">Comedor</div>
-      <div class="menu-item" data-tipo="hab-invitados">Hab-Invitados</div>
+      <div class="menu-item" data-tipo="dormitorio">Bedroom</div>
+      <div class="menu-item" data-tipo="cocina">Kitchen</div>
+      <div class="menu-item" data-tipo="baño">Bathroom</div>
+      <div class="menu-item" data-tipo="sala">Hall</div>
+      <div class="menu-item" data-tipo="comedor">Dining Room</div>
+      <div class="menu-item" data-tipo="hab-invitados">Guestroom</div>
     </div>
     <script src="{{ url_for('static', filename='js/state.js') }}"></script>
     <script src="{{ url_for('static', filename='js/tools.js') }}"></script>
