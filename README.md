@@ -25,21 +25,21 @@ En el cual scapreo datos de Mercado Libre Inmuebles. En más de 30 localidades d
 
 ## Cómo usar
 
-1. **Dibuja habitaciones** - Click y arrastra para crear espacios
+1. **Dibuja habitaciones**
 
-2. **Etiqueta cada espacio** - Click derecho → selecciona el tipo
+2. **Etiqueta cada espacio**
 
-![draw-select](./images/draw-select.gif)
+3.1. Mover habitaciones
 
-1. Mover habitaciones - Click y mantener con la herramienta seleccionada
+3.2. Scalar habitaciones
 
-2. Scalar habitaciones - Click y mantener en las esquinas de los bloques
+3.3. Borrar habitaciones
 
-![move-scaling](./images/move-scaling.gif)
+![blueprint](./images/blueprint.png)
 
 1. **Completa los datos** - Área total, características adicionales
 
-![additional-information](./images/additional_information.gif)
+![additional](./images/additional-information.png)
 
 1. **Obtén el precio** - Click en "Calcular valor"
 
