@@ -12,11 +12,11 @@ function collectRoomData() {
 
   // Tipos que cuentan como "ambientes" en Argentina
   const ambientesValidos = [
-    "dormitorio",
-    "cocina",
-    "sala",
-    "comedor",
-    "hab-invitados",
+    "bedroom",
+    "kitchen",
+    "hall",
+    "bathroom",
+    "guestroom",
   ];
 
   // Contar habitaciones (solo las válidas)

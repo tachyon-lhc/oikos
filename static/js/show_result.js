@@ -23,10 +23,10 @@ function createPriceModal() {
             </svg>
           </div>
           
-          <h2 class="modal-title">Estimación Completada</h2>
+          <h2 class="modal-title">Estimate completed</h2>
           
           <div class="modal-price-container">
-            <span class="modal-price-label">Precio Estimado</span>
+            <span class="modal-price-label">Estimated price</span>
             <span class="modal-price" id="modal-price-value">$0</span>
           </div>
           
@@ -35,8 +35,8 @@ function createPriceModal() {
           </div>
           
           <div class="modal-actions">
-            <button class="btn-secondary" onclick="closePriceModal()">Cerrar</button>
-            <button class="btn-primary" onclick="resetCanvas()">Nuevo Plano</button>
+            <button class="btn-secondary" onclick="closePriceModal()">Close</button>
+            <button class="btn-primary" onclick="resetCanvas()">New house</button>
           </div>
         </div>
       </div>
@@ -241,13 +241,13 @@ function showPriceModal(price, details = {}) {
   if (Object.keys(details).length > 0) {
     let detailsHTML = "";
     if (details.rooms)
-      detailsHTML += `<p><span>Ambientes:</span> <strong>${details.rooms}</strong></p>`;
+      detailsHTML += `<p><span>Rooms:</span> <strong>${details.rooms}</strong></p>`;
     if (details.bathrooms)
-      detailsHTML += `<p><span>Baños:</span> <strong>${details.bathrooms}</strong></p>`;
+      detailsHTML += `<p><span>Bathrooms:</span> <strong>${details.bathrooms}</strong></p>`;
     if (details.area)
-      detailsHTML += `<p><span>Superficie:</span> <strong>${details.area} m²</strong></p>`;
+      detailsHTML += `<p><span>Area:</span> <strong>${details.area} m²</strong></p>`;
     if (details.location)
-      detailsHTML += `<p><span>Ubicación:</span> <strong>${details.location}</strong></p>`;
+      detailsHTML += `<p><span>Location:</span> <strong>${details.location}</strong></p>`;
 
     detailsElement.innerHTML = detailsHTML;
     detailsElement.style.display = "block";
@@ -278,7 +278,7 @@ function handleEscKey(e) {
 
 // Función para resetear el canvas
 function resetCanvas() {
-  if (confirm("¿Estás seguro de que quieres borrar todo el plano?")) {
+  if (confirm("Are you sure you want to delete the entire blueprint?")) {
     const canvas = document.getElementById("canvas");
     // Limpiar todos los grupos de rectángulos
     canvas
@@ -305,11 +305,11 @@ function collectRoomData() {
   let bathrooms = 0;
 
   const ambientesValidos = [
-    "dormitorio",
-    "cocina",
-    "sala",
-    "comedor",
-    "hab-invitados",
+    "bedroom",
+    "kitchen",
+    "hall",
+    "dining-room",
+    "guestroom",
   ];
 
   allGroups.forEach((group) => {
@@ -326,7 +326,7 @@ function collectRoomData() {
       rooms++;
     }
 
-    if (tipo === "baño") {
+    if (tipo === "bathroom") {
       bathrooms++;
     }
   });

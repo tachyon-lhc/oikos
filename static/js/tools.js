@@ -55,8 +55,7 @@ function initLocationSelectors() {
     const regionSeleccionada = this.value;
 
     // Limpiar localidades
-    localidadSelect.innerHTML =
-      '<option value="">Seleccionar localidad...</option>';
+    localidadSelect.innerHTML = '<option value="">Select region...</option>';
 
     if (regionSeleccionada && UBICACIONES[regionSeleccionada]) {
       // Habilitar el select de localidad
