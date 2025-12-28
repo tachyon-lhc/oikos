@@ -29,19 +29,20 @@ body {
 }
 
 .house-icon {
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 34px;
   position: relative;
 }
 
 .roof {
   width: 0;
   height: 0;
-  border-left: 18px solid transparent;
+  border-left: 16px solid transparent;
   border-right: 16px solid transparent;
-  border-bottom: 14px solid #667eea;
+  border-bottom: 16px solid #667eea;
   position: absolute;
   top: 0;
+  right: -4px;
 }
 
 .base {
@@ -50,7 +51,7 @@ body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: absolute;
   bottom: 0;
-  left: 4px;
+  left: 0px;
   border-radius: 2px;
 }
 
