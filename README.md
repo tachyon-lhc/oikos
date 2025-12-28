@@ -29,11 +29,7 @@ En el cual scapreo datos de Mercado Libre Inmuebles. En más de 30 localidades d
 
 2. **Etiqueta cada espacio**
 
-3.1. Mover habitaciones
-
-3.2. Scalar habitaciones
-
-3.3. Borrar habitaciones
+3. Mover, Scalar, Borrar: Habitaciones
 
 ![blueprint](./images/blueprint.png)
 
