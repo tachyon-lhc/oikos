@@ -6,7 +6,7 @@ Diseña el plano de tu casa y obtén una predicción de precio instantánea usan
 
 ## Web Oficial
 
-<https://oikos-hvpr.onrender.com/>
+<https://oikos-hvpr.onrender.com](https://oikos-9jw1.onrender.com/>
 
 ## ![principal](./images/oikos-principal.png)
 
