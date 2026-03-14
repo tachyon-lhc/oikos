@@ -53,8 +53,8 @@ def limpiar_columnas(df):
 
 def entrenar_modelo(X_train, y_train):
     model = RandomForestRegressor(
-        n_estimators=200,
-        max_depth=20,
+        n_estimators=50,
+        max_depth=15,
         min_samples_split=5,
         min_samples_leaf=2,
         random_state=42,
