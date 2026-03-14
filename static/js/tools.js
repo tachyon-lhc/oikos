@@ -1,47 +1,58 @@
 // Datos de ubicaciones
+// value: lo que se envía al servidor (debe coincidir con los encoders)
+// label: lo que ve el usuario
 const UBICACIONES = {
   "GBA Norte": [
-    "Pilar",
-    "Escobar",
-    "Tigre",
-    "San Isidro",
-    "San Miguel",
-    "General San Martin",
-    "Vicente Lopez",
-    "Malvinas Argentina",
-    "San Fernando",
+    { value: "pilar", label: "Pilar" },
+    { value: "escobar", label: "Escobar" },
+    { value: "tigre", label: "Tigre" },
+    { value: "san-isidro", label: "San Isidro" },
+    { value: "san-miguel", label: "San Miguel" },
+    { value: "general-san-martin", label: "General San Martin" },
+    { value: "vicente-lopez", label: "Vicente Lopez" },
+    { value: "malvinas-argentina", label: "Malvinas Argentina" },
+    { value: "san-fernando", label: "San Fernando" },
   ],
   "GBA Oeste": [
-    "La Matanza",
-    "Moron",
-    "Ituzaingo",
-    "Moreno",
-    "Merlo",
-    "Castelar",
-    "Tres de Febrero",
-    "Hurlingham",
+    { value: "la-matanza", label: "La Matanza" },
+    { value: "moron", label: "Moron" },
+    { value: "ituzaingo", label: "Ituzaingo" },
+    { value: "moreno", label: "Moreno" },
+    { value: "merlo", label: "Merlo" },
+    { value: "castelar", label: "Castelar" },
+    { value: "tres-de-febrero", label: "Tres de Febrero" },
+    { value: "hurlingham", label: "Hurlingham" },
   ],
   "GBA Sur": [
-    "La Plata",
-    "Esteban Echeverria",
-    "Quilmes",
-    "Lomas de Zamora",
-    "Ezeiza",
-    "Berazategui",
-    "Lanus",
-    "Almirante Brown",
-    "Avellaneda",
+    { value: "la-plata", label: "La Plata" },
+    { value: "esteban-echeverria", label: "Esteban Echeverria" },
+    { value: "quilmes", label: "Quilmes" },
+    { value: "lomas-de-zamora", label: "Lomas de Zamora" },
+    { value: "ezeiza", label: "Ezeiza" },
+    { value: "berazategui", label: "Berazategui" },
+    { value: "lanus", label: "Lanus" },
+    { value: "almirante-brown", label: "Almirante Brown" },
+    { value: "avellaneda", label: "Avellaneda" },
   ],
-  Córdoba: ["Córdoba", "Punilla", "Colon", "Villa Carlos Paz", "Santa Maria"],
+  Córdoba: [
+    { value: "cordoba", label: "Córdoba" },
+    { value: "punilla", label: "Punilla" },
+    { value: "colon", label: "Colon" },
+    { value: "villa-carlos-paz", label: "Villa Carlos Paz" },
+    { value: "santa-maria", label: "Santa Maria" },
+  ],
   "Costa Atlántica": [
-    "Mar del Plata",
-    "Costa Esmeralda",
-    "Pinamar",
-    "Mar del Tuyu",
-    "Villa Gesell",
-    "Mar de Ajo",
+    { value: "mar-del-plata", label: "Mar del Plata" },
+    { value: "costa-esmeralda", label: "Costa Esmeralda" },
+    { value: "pinamar", label: "Pinamar" },
+    { value: "mar-del-tuyu", label: "Mar del Tuyu" },
+    { value: "villa-gesell", label: "Villa Gesell" },
+    { value: "mar-de-ajo", label: "Mar de Ajo" },
   ],
-  "Buenos Aires Interior": ["Lujan", "San Vicente"],
+  "Buenos Aires Interior": [
+    { value: "lujan", label: "Lujan" },
+    { value: "san-vicente", label: "San Vicente" },
+  ],
 };
 
 // Manejo del selector de ubicación
@@ -55,17 +66,17 @@ function initLocationSelectors() {
     const regionSeleccionada = this.value;
 
     // Limpiar localidades
-    localidadSelect.innerHTML = '<option value="">Select region...</option>';
+    localidadSelect.innerHTML = '<option value="">Select city...</option>';
 
     if (regionSeleccionada && UBICACIONES[regionSeleccionada]) {
       // Habilitar el select de localidad
       localidadSelect.disabled = false;
 
       // Agregar las localidades de la región seleccionada
-      UBICACIONES[regionSeleccionada].forEach((localidad) => {
+      UBICACIONES[regionSeleccionada].forEach((item) => {
         const option = document.createElement("option");
-        option.value = localidad;
-        option.textContent = localidad;
+        option.value = item.value;
+        option.textContent = item.label;
         localidadSelect.appendChild(option);
       });
     } else {

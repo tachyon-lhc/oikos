@@ -240,14 +240,14 @@ function showPriceModal(price, details = {}) {
   // Mostrar detalles opcionales
   if (Object.keys(details).length > 0) {
     let detailsHTML = "";
-    if (details.rooms)
-      detailsHTML += `<p><span>Rooms:</span> <strong>${details.rooms}</strong></p>`;
+    if (details.ambientes)
+      detailsHTML += `<p><span>Ambientes:</span> <strong>${details.ambientes}</strong></p>`;
     if (details.bathrooms)
-      detailsHTML += `<p><span>Bathrooms:</span> <strong>${details.bathrooms}</strong></p>`;
+      detailsHTML += `<p><span>Baños:</span> <strong>${details.bathrooms}</strong></p>`;
     if (details.area)
-      detailsHTML += `<p><span>Area:</span> <strong>${details.area} m²</strong></p>`;
+      detailsHTML += `<p><span>Área:</span> <strong>${details.area} m²</strong></p>`;
     if (details.location)
-      detailsHTML += `<p><span>Location:</span> <strong>${details.location}</strong></p>`;
+      detailsHTML += `<p><span>Ubicación:</span> <strong>${details.location}</strong></p>`;
 
     detailsElement.innerHTML = detailsHTML;
     detailsElement.style.display = "block";
@@ -301,15 +301,16 @@ function collectRoomData() {
   const allGroups = document.querySelectorAll("#canvas .rectangle-group");
   console.log("Total de grupos encontrados:", allGroups.length);
 
-  let rooms = 0;
+  let ambientes = 0;
   let bathrooms = 0;
 
   const ambientesValidos = [
     "bedroom",
     "kitchen",
     "hall",
-    "dining-room",
+    "bathroom",
     "guestroom",
+    "dining-room",
   ];
 
   allGroups.forEach((group) => {
@@ -323,7 +324,7 @@ function collectRoomData() {
     if (ancho < 5 || alto < 5) return;
 
     if (ambientesValidos.includes(tipo)) {
-      rooms++;
+      ambientes++;
     }
 
     if (tipo === "bathroom") {
@@ -332,20 +333,18 @@ function collectRoomData() {
   });
 
   const area = parseInt(document.getElementById("area-metros").value) || 0;
-  const region = document.getElementById("region-select").value || "";
-  const localidad = document.getElementById("localidad-select").value || "";
-  const location = localidad && region ? `${region} - ${localidad}` : "";
+  const zona = document.getElementById("region-select").value || "";
+  const ciudad = document.getElementById("localidad-select").value || "";
 
-  console.log(`Ambientes contados: ${rooms} (${ambientesValidos.join(", ")})`);
+  console.log(`Ambientes contados: ${ambientes} (${ambientesValidos.join(", ")})`);
   console.log(`Baños contados: ${bathrooms}`);
 
   return {
-    rooms,
+    ambientes,
     bathrooms,
     area,
-    location,
-    region,
-    localidad,
+    zona,
+    ciudad,
   };
 }
 
@@ -363,11 +362,11 @@ function initExport() {
       alert("⚠️ Por favor ingresa el área en metros cuadrados");
       return;
     }
-    if (!data.location) {
+    if (!data.zona || !data.ciudad) {
       alert("⚠️ Por favor selecciona la región y localidad");
       return;
     }
-    if (data.rooms === 0) {
+    if (data.ambientes === 0) {
       alert("⚠️ Por favor dibuja al menos un ambiente en el plano");
       return;
     }
@@ -401,11 +400,12 @@ function initExport() {
       console.log("Respuesta de Flask:", result);
 
       // 🎉 Mostrar modal en lugar de alert
+      const location = data.zona && data.ciudad ? `${data.zona} - ${data.ciudad}` : "";
       showPriceModal(result.formatted_price, {
-        rooms: data.rooms,
+        ambientes: data.ambientes,
         bathrooms: data.bathrooms,
         area: data.area,
-        location: data.location,
+        location: location,
       });
     } catch (error) {
       console.error("Error al conectar con Flask:", error);

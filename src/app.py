@@ -11,19 +11,26 @@ sys.path.insert(0, os.path.dirname(__file__))
 app = Flask(__name__, template_folder="../templates", static_folder="../static")
 CORS(app)
 
+
+@app.after_request
+def add_header(response):
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
+
 # Usar ruta absoluta para el modelo y encoders
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "models", "price_model.pkl")
-ZONE_ENCODER_PATH = os.path.join(BASE_DIR, "models", "zone_encoder.pkl")
-CITY_ENCODER_PATH = os.path.join(BASE_DIR, "models", "city_encoder.pkl")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "modelo_general.pkl")
+ZONE_ENCODER_PATH = os.path.join(BASE_DIR, "models", "zona_encoder.pkl")
+CITY_ENCODER_PATH = os.path.join(BASE_DIR, "models", "ciudad_encoder.pkl")
 
 model = None
-le_zone = None
-le_city = None
+le_zona = None
+le_ciudad = None
 
 
 def load_model():
-    global model, le_zone, le_city
+    global model, le_zona, le_ciudad
     print("\n=== DEBUG INFO ===")
     print(f"BASE_DIR: {BASE_DIR}")
     print(f"MODEL_PATH: {MODEL_PATH}")
@@ -52,25 +59,25 @@ def load_model():
     # Cargar encoders
     if os.path.exists(ZONE_ENCODER_PATH):
         try:
-            le_zone = joblib.load(ZONE_ENCODER_PATH)
+            le_zona = joblib.load(ZONE_ENCODER_PATH)
             print(
-                f"✓ Zone encoder cargado. Zonas disponibles: {list(le_zone.classes_)}"
+                f"✓ Zone encoder cargado. Zonas disponibles: {list(le_zona.classes_)}"
             )
         except Exception as e:
-            print(f"✗ ERROR al cargar zone encoder: {e}")
+            print(f"✗ ERROR al cargar zona encoder: {e}")
     else:
-        print(f"✗ ERROR: No se encontró zone_encoder en {ZONE_ENCODER_PATH}")
+        print(f"✗ ERROR: No se encontró zona_encoder en {ZONE_ENCODER_PATH}")
 
     if os.path.exists(CITY_ENCODER_PATH):
         try:
-            le_city = joblib.load(CITY_ENCODER_PATH)
+            le_ciudad = joblib.load(CITY_ENCODER_PATH)
             print(
-                f"✓ City encoder cargado. Ciudades disponibles: {list(le_city.classes_)}"
+                f"✓ City encoder cargado. Ciudades disponibles: {list(le_ciudad.classes_)}"
             )
         except Exception as e:
-            print(f"✗ ERROR al cargar city encoder: {e}")
+            print(f"✗ ERROR al cargar ciudad encoder: {e}")
     else:
-        print(f"✗ ERROR: No se encontró city_encoder en {CITY_ENCODER_PATH}")
+        print(f"✗ ERROR: No se encontró ciudad_encoder en {CITY_ENCODER_PATH}")
 
 
 @app.route("/")
@@ -84,11 +91,11 @@ def status():
         {
             "status": "ok",
             "model_loaded": model is not None,
-            "encoders_loaded": le_zone is not None and le_city is not None,
+            "encoders_loaded": le_zona is not None and le_ciudad is not None,
             "model_path": MODEL_PATH,
             "model_exists": os.path.exists(MODEL_PATH),
-            "zones_available": list(le_zone.classes_) if le_zone else [],
-            "cities_available": list(le_city.classes_) if le_city else [],
+            "zonas_available": list(le_zona.classes_) if le_zona else [],
+            "cities_available": list(le_ciudad.classes_) if le_ciudad else [],
         }
     )
 
@@ -100,49 +107,55 @@ def predict():
         print("\n--- Nueva predicción ---")
         print(f"Datos recibidos: {data}")
 
-        # Validar que el modelo y encoders estén cargados
-        if model is None or le_zone is None or le_city is None:
-            print("ERROR: Modelo o encoders no cargados")
+        if model is None or le_zona is None or le_ciudad is None:
             return jsonify({"error": "Modelo no cargado. Ver logs del servidor."}), 500
 
         # Extraer datos
-        rooms = data.get("rooms", 0)
+        ambientes = data.get("ambientes", 0)
         bathrooms = data.get("bathrooms", 0)
         area = data.get("area", 0)
-        region = data.get("region", "")
-        localidad = data.get("localidad", "")
+        zona = data.get("zona", "")
+        ciudad = data.get("ciudad", "")
 
         # Validar datos obligatorios
-        if not all([rooms, area, region, localidad]):
+        if not all([ambientes, area, zona, ciudad]):
             return jsonify(
-                {"error": "Faltan datos obligatorios: rooms, area, region, localidad"}
+                {"error": "Faltan datos obligatorios: ambientes, area, zona, ciudad"}
             ), 400
 
-        print(f"Rooms: {rooms}, Bathrooms: {bathrooms}, Area: {area}")
-        print(f"Region: {region}, Localidad: {localidad}")
+        print(f"Ambientes: {ambientes}, Bathrooms: {bathrooms}, Area: {area}")
+        print(f"Zona: {zona}, Ciudad: {ciudad}")
 
         # Codificar zona y ciudad
         try:
-            zone_encoded = le_zone.transform([region])[0]
-            city_encoded = le_city.transform([localidad])[0]
-            print(f"Zone encoded: {zone_encoded}, City encoded: {city_encoded}")
+            zona_encoded = le_zona.transform([zona])[0]
+            ciudad_encoded = le_ciudad.transform([ciudad])[0]
         except ValueError as e:
-            available_zones = list(le_zone.classes_)
-            available_cities = list(le_city.classes_)
-            error_msg = f"Región o localidad no reconocida. Disponibles:\nZonas: {available_zones}\nCiudades: {available_cities}"
-            print(f"ERROR: {error_msg}")
+            available_zonas = list(le_zona.classes_)
+            available_ciudades = list(le_ciudad.classes_)
+            error_msg = f"Zona o ciudad no reconocida.\nZonas: {available_zonas}\nCiudades: {available_ciudades}"
             return jsonify({"error": error_msg}), 400
 
-        # Crear array de features en el orden correcto
-        # [rooms, bathrooms, square_meters, zone_encoded, city_encoded]
-        features = np.array([[rooms, bathrooms, area, zone_encoded, city_encoded]])
+        # Features en el orden correcto
+        ambientes_por_m2 = ambientes / area
+        baños_por_ambiente = bathrooms / ambientes if ambientes > 0 else 0
+
+        features = np.array(
+            [
+                [
+                    ambientes,
+                    bathrooms,
+                    area,
+                    zona_encoded,
+                    ciudad_encoded,
+                    ambientes_por_m2,
+                    baños_por_ambiente,
+                ]
+            ]
+        )
         print(f"Features para predicción: {features[0]}")
 
-        # Hacer predicción
         prediction = model.predict(features)[0]
-        print(f"Predicción: ${prediction:,.2f}")
-
-        # Formatear precio
         formatted_price = f"${prediction:,.2f}"
 
         return jsonify(
@@ -150,11 +163,11 @@ def predict():
                 "predicted_price": float(prediction),
                 "formatted_price": formatted_price,
                 "input_data": {
-                    "rooms": rooms,
+                    "ambientes": ambientes,
                     "bathrooms": bathrooms,
                     "area": area,
-                    "region": region,
-                    "localidad": localidad,
+                    "zona": zona,
+                    "ciudad": ciudad,
                 },
             }
         )
@@ -172,7 +185,7 @@ if __name__ == "__main__":
     print("\n" + "=" * 50)
     print("Servidor Flask iniciado")
     print("Estado del modelo:", "✓ OK" if model else "✗ Error")
-    print("Estado de encoders:", "✓ OK" if (le_zone and le_city) else "✗ Error")
+    print("Estado de encoders:", "✓ OK" if (le_zona and le_ciudad) else "✗ Error")
     print("=" * 50)
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
 else:
