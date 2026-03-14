@@ -1,10 +1,10 @@
 # 🏠 House Price Predictor
 
-Diseña el plano de tu casa y obtén una predicción de precio instantánea usando Machine Learning.
+Design your house floor plan and get an instant price prediction using Machine Learning.
 
 ---
 
-## Web Oficial
+## Official Web
 
 <https://oikos-9jw1.onrender.com/>
 
@@ -12,54 +12,54 @@ Diseña el plano de tu casa y obtén una predicción de precio instantánea usan
 
 ---
 
-## ¿Qué hace?
+## What does it do?
 
-Una aplicación web que te permite dibujar habitaciones interactivamente y predice el precio de la vivienda usando un modelo de Random Forest entrenado con más de 21k propiedades reales.
+A web application that allows you to draw rooms interactively and predicts the housing price using a Random Forest model trained with over 72k real properties.
 
 ---
 
-## De donde obtiene los datos?
+## Where does it get the data from?
 
-Obtuve los datos mediante un scraper que puedes encontrar en mi repositorio: <https://github.com/tachyon-lhc/ml-web-sraping>
-En el cual scapreo datos de Mercado Libre Inmuebles. En más de 30 localidades de Buenos Aires.
+I obtained the data using a scraper that you can find in my repository: <https://github.com/tachyon-lhc/ml-web-sraping>
+In which I scrape data from Mercado Libre Inmuebles. In more than 30 locations in Buenos Aires.
 
-## Cómo usar
+## How to use
 
-1. **Dibuja habitaciones**
+1. **Draw rooms**
 
-2. **Etiqueta cada espacio**
+2. **Label each space**
 
-3. Mover, Scalar, Borrar: Habitaciones
+3. Move, Scale, Delete: Rooms
 
 ![blueprint](./images/blueprint.png)
 
-1. **Completa los datos** - Área total, características adicionales
+1. **Complete the data** - Total area, additional features
 
 ![additional](./images/additional-information.png)
 
-1. **Obtén el precio** - Click en "Calcular valor"
+1. **Get the price** - Click on "Calcular valor"
 
 ![show-price](./images/show_results.png)
 
-## Instalación Local
+## Local Installation
 
 ```bash
-# Clonar
+# Clone
 git clone https://github.com/tachyon/oikos.git
 cd oikos
 
-# Instalar dependencias
+# Install dependencies
 python -m venv venv
 source venv/bin/activate
 pip install -r src/requirements.txt
 
-# Entrenar modelo y correr
+# Train model and run
 python src/app.py
 ```
 
 ---
 
-## Stack Tecnológico
+## Tech Stack
 
 **Frontend:** Vanilla JavaScript, SVG Canvas, CSS3  
 **Backend:** Flask, Python  
@@ -68,19 +68,19 @@ python src/app.py
 
 ---
 
-## Rendimiento del Modelo
+## Model Performance
 
-- **R² Score:** 0.8 (explica el 80% de la varianza)
+- **R² Score:** 0.72 (explains 72% of the variance)
 
 ---
 
-## Estructura
+## Structure
 
 ```
 ├── src/
 │   ├── app.py           # Flask API
-│   ├── train_model.py   # Entrenamiento ML
-│   └── models/          # Modelo guardado
+│   ├── train_model.py   # ML Training
+│   └── models/          # Saved model
 ├── static/              # CSS/JS
 ├── templates/           # HTML
 └── data/               # Dataset
@@ -88,6 +88,6 @@ python src/app.py
 
 ---
 
-## Contribuir
+## Contributing
 
-Pull requests son bienvenidos. Para cambios grandes, abre un issue primero.
+Pull requests are welcome. For major changes, please open an issue first.
