@@ -17,4 +17,3 @@ ENV/
 # Sistema
 .DS_Store
 Thumbs.db
-src/models/modelo_general.pkl
