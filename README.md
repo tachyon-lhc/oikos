@@ -4,6 +4,10 @@ Design your house floor plan and get an instant price prediction using Machine L
 
 ---
 
+## ![principal](./images/oikos-principal.png)
+
+---
+
 ## 🔗 Links
 
 |                     |                                                                                                                |
@@ -18,10 +22,6 @@ Design your house floor plan and get an instant price prediction using Machine L
 | ------------------- | -------------------------------------------------------------- |
 | 🕷️ Scraper          | [oikos-scraper](https://github.com/tachyon-lhc/ml-web-sraping) |
 | 🔍 Data Exploration | [oikos-data-exploration](https://github.com/hadron-lhc/oikos)  |
-
----
-
-## ![principal](./images/oikos-principal.png)
 
 ---
 
