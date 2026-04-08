@@ -241,13 +241,13 @@ function showPriceModal(price, details = {}) {
   if (Object.keys(details).length > 0) {
     let detailsHTML = "";
     if (details.ambientes)
-      detailsHTML += `<p><span>Ambientes:</span> <strong>${details.ambientes}</strong></p>`;
+      detailsHTML += `<p><span>Rooms:</span> <strong>${details.ambientes}</strong></p>`;
     if (details.bathrooms)
-      detailsHTML += `<p><span>Baños:</span> <strong>${details.bathrooms}</strong></p>`;
+      detailsHTML += `<p><span>Bathrooms:</span> <strong>${details.bathrooms}</strong></p>`;
     if (details.area)
-      detailsHTML += `<p><span>Área:</span> <strong>${details.area} m²</strong></p>`;
+      detailsHTML += `<p><span>Area:</span> <strong>${details.area} m²</strong></p>`;
     if (details.location)
-      detailsHTML += `<p><span>Ubicación:</span> <strong>${details.location}</strong></p>`;
+      detailsHTML += `<p><span>Location:</span> <strong>${details.location}</strong></p>`;
 
     detailsElement.innerHTML = detailsHTML;
     detailsElement.style.display = "block";
@@ -336,7 +336,9 @@ function collectRoomData() {
   const zona = document.getElementById("region-select").value || "";
   const ciudad = document.getElementById("localidad-select").value || "";
 
-  console.log(`Ambientes contados: ${ambientes} (${ambientesValidos.join(", ")})`);
+  console.log(
+    `Ambientes contados: ${ambientes} (${ambientesValidos.join(", ")})`,
+  );
   console.log(`Baños contados: ${bathrooms}`);
 
   return {
@@ -400,7 +402,8 @@ function initExport() {
       console.log("Respuesta de Flask:", result);
 
       // 🎉 Mostrar modal en lugar de alert
-      const location = data.zona && data.ciudad ? `${data.zona} - ${data.ciudad}` : "";
+      const location =
+        data.zona && data.ciudad ? `${data.zona} - ${data.ciudad}` : "";
       showPriceModal(result.formatted_price, {
         ambientes: data.ambientes,
         bathrooms: data.bathrooms,
