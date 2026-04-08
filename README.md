@@ -12,15 +12,15 @@ Design your house floor plan and get an instant price prediction using Machine L
 
 |                     |                                                                                                                |
 | ------------------- | -------------------------------------------------------------------------------------------------------------- |
-| 🌐 Web App          | [oikos-9jw1.onrender.com](https://oikos-9jw1.onrender.com/)                                                    |
+| 🌐 Web App          | [oikos-hvpr.onrender.com](https://oikos-hvpr.onrender.com/)                                                    |
 | 📊 Market Dashboard | [Looker Studio](https://lookerstudio.google.com/u/0/reporting/aac5fa4f-ba3a-443a-85f6-aade78be0318/page/78DsF) |
 | 🔍 Data Exploration | [Streamlit](https://oikos-data-exploration.streamlit.app/)                                                     |
 
 ## 📁 Related Repositories
 
-|                     |                                                               |
-| ------------------- | ------------------------------------------------------------- |
-| 🕷️ Scraper          | [oikos-scraper](https://github.com/hadron-lhc/ml-web-sraping) |
+|                     |                                                                                |
+| ------------------- | ------------------------------------------------------------------------------ |
+| 🕷️ Scraper          | [oikos-scraper](https://github.com/hadron-lhc/ml-web-sraping)                  |
 | 🔍 Data Exploration | [oikos-data-exploration](https://github.com/hadron-lhc/oikos-data-exploration) |
 
 ---
