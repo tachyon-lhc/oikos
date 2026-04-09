@@ -20,7 +20,7 @@ Design your house floor plan and get an instant price prediction using Machine L
 
 |                     |                                                                                |
 | ------------------- | ------------------------------------------------------------------------------ |
-| 🕷️ Scraper          | [oikos-scraper](https://github.com/hadron-lhc/ml-web-sraping)                  |
+| 🕷️ Scraper          | [oikos-scraper](https://github.com/hadron-lhc/Scraper_ML-Inmuebles)                  |
 | 🔍 Data Exploration | [oikos-data-exploration](https://github.com/hadron-lhc/oikos-data-exploration) |
 
 ---
